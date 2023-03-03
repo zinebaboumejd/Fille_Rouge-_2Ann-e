@@ -3,7 +3,7 @@ import React from 'react'
 
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Logo_login from '../images/Boost your inmune system-bro.svg'
+import Logo_login from '../../images/Boost your inmune system-bro.svg'
 
 function Login() {
     const [email, setEmail] = useState('');
@@ -29,7 +29,7 @@ function Login() {
         if (data.role === "admin") {
             localStorage.setItem('token', data.token);
             localStorage.setItem('role', data.role);
-            window.location.href = "/dashboard";
+            window.location.href = "/";
         }
         else {
             alert("You are not an admin");
