@@ -3,6 +3,8 @@ import Dashboard from './pages/Dashboard';
 import Login from './pages/Auth/Login';
 import Said_Bar from './components/Said_Bar';
 import Ajouter_Employer from './pages/Ajouter_Employer';
+import Aliment from './pages/Aliment'
+import Repas from './pages/Repas';
 
 
 function App() {
@@ -15,6 +17,8 @@ function App() {
           <Route path="/" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Ajouter_Employer" element={<Ajouter_Employer />} />
+          <Route path="/Aliment" element={<Aliment />} />
+          <Route path="/Repas" element={<Repas />} />
           
         </Routes>
       </Router>

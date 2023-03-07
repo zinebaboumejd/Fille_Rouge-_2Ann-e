@@ -10,12 +10,13 @@ const getAliment = asyncHandler(async (req, res) => {
 );
 // addAliment
 const addAliment = asyncHandler(async (req, res) => {
-    const {nom,Calorie,Proteine,Glucide}=req.body;
+    const {nom,Calorie,Proteine,Glucide,Lipide}=req.body;
     const aliment = await Aliment.create({
         nom,
         Calorie,
         Proteine,
         Glucide,
+        Lipide,
     });
     if (aliment) {
         res.status(201).json({
@@ -24,6 +25,7 @@ const addAliment = asyncHandler(async (req, res) => {
             Calorie: aliment.Calorie,
             Proteine: aliment.Proteine,
             Glucide: aliment.Glucide,
+            Lipide: aliment.Lipide,
         });
     } else {
         res.status(400);

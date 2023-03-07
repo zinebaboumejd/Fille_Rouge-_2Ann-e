@@ -18,6 +18,10 @@ const AlimentSchema = mongoose.Schema(
             type: Number,
             required: [true, "S'il vous plaît entrez votre Glucide"],
         },
+        Lipide:{
+            type: Number,
+            required: [true, "S'il vous plaît entrez votre Lipide"],
+        }
 
         },
     {

@@ -1,6 +1,6 @@
 const express = require("express"); 
 const asyncHandler = require("express-async-handler");
-const Repas = require("../models/RepasModel");
+const Repas=require ("../Models/RepasModels")
 
 
 // /get user
@@ -74,6 +74,6 @@ module.exports = {
     addRepas,
     deleteRepas,
     updateRepas,
-    
+
   
 };

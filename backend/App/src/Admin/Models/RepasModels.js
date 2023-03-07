@@ -1,4 +1,5 @@
 const mongoose = require('mongoose');
+
 const RepasSchema = mongoose.Schema({
     nom: {
         type: String,
@@ -17,4 +18,5 @@ const RepasSchema = mongoose.Schema({
 }, {
     timestamp: true,
 });
+
 module.exports = mongoose.model('Repas', RepasSchema);
