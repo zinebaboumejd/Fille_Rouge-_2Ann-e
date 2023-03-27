@@ -5,10 +5,10 @@ const RepasSchema = mongoose.Schema({
         type: String,
         required: [true, "S'il vous plaît entrez votre nom"],
     },
-    date: {
-        type: Date,
-        required: [true, "S'il vous plaît entrez votre date"],
-    },
+    // date: {
+    //     type: Date,
+    //     required: [true, "S'il vous plaît entrez votre date"],
+    // },
   
     aliments: [{
         type: mongoose.Schema.Types.ObjectId,
