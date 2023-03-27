@@ -1,4 +1,4 @@
-import {BrowserRouter as Router, Route, Routes} from 'react-router-dom';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import Dashboard from './pages/Dashboard';
 import Login from './pages/Auth/Login';
 import Said_Bar from './components/Said_Bar';
@@ -8,18 +8,18 @@ import Repas from './pages/Repas';
 
 
 function App() {
-// const tocken =localStorage.getItem('tocken')
+  // const tocken =localStorage.getItem('tocken')
   return (
     <div className="App">
       <Said_Bar />
       <Router>
         <Routes>
-          <Route path="/" element={<Dashboard />} />
+          <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/login" element={<Login />} />
           <Route path="/Ajouter_Employer" element={<Ajouter_Employer />} />
           <Route path="/Aliment" element={<Aliment />} />
           <Route path="/Repas" element={<Repas />} />
-          
+
         </Routes>
       </Router>
     </div>

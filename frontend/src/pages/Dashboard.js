@@ -7,7 +7,6 @@ import "react-toastify/dist/ReactToastify.css";
 import Entete from '../components/Entete';
 function Dashboard() {
   // tocken
-
   const [token, setToken] = useState(localStorage.getItem('token'));
   // get client
   const [client, setClient] = useState([]);

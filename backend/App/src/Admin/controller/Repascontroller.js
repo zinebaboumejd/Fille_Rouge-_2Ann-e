@@ -5,7 +5,7 @@ const Repas=require ("../Models/RepasModels")
 
 // /get user
 const getRepas = asyncHandler(async (req, res) => {
-    const repas = await Repas.find();
+    const repas = await Repas.find().populate('aliments');
     res.json(repas);
 });
 
