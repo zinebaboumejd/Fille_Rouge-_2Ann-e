@@ -28,7 +28,7 @@ const role = (role) => (req, res, next) => {
         next();
     } else {
         res.status(401);
-        throw new Error("Not authorized as an admin");
+        throw new Error("Not authorized ");
     }
 };
 // middleware pour les comptes actifs et non activ pour action de transaction 

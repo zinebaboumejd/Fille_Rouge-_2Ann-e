@@ -25,6 +25,5 @@ app.use(errorHandler);
 // // Routes
 app.use("/auth", require("./App/src/Auth/routes/authRoute"));
 app.use("/admin", require("./App/src/Admin/Routes/AdminRouter"));
-// app.use("/client", require("./banck/Clients/Routes/clientRoute"));
-
+app.use("/client", require("./App/src/Clients/Routes/CorpsRoute"));
 app.listen(port, () => console.log(`Server started on port ${port}`))
