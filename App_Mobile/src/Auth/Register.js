@@ -13,10 +13,11 @@ import {
   Button,
   TouchableOpacity
 } from "react-native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
-const Register = ({ navigation, route }) => {
-  const [isLoading, setLoading] = useState(false);
+const Register = ({ navigation}) => {
   const navigate = useNavigation();
+  const [loading, setLoading] = useState(false);
   
   const [data, setData] = useState({
     nom: "",
@@ -31,9 +32,6 @@ const Register = ({ navigation, route }) => {
       [key]: value
     }));
   }
-
-
-   
   
   //  handleSubmit
   const handleSubmit = () => {
@@ -47,8 +45,6 @@ const Register = ({ navigation, route }) => {
             email: data.email,
             password: data.password,
         },
-
-
         headers: {
             "Content-Type": "application/json",
         },
@@ -56,7 +52,17 @@ const Register = ({ navigation, route }) => {
         .then((res) => {
             setLoading(false);
             console.log(res.data);
-            navigation.navigate("Login");
+            
+AsyncStorage.setItem('token', res.data.token)
+.then(() => {
+  console.log('Token stored successfully.');
+})
+.catch((error) => {
+  console.log('Error storing token: ', error);
+});
+       // Pass the data as a parameter to the 'Corps' screen
+            navigation.navigate('Corps', { data: res.data });
+        // console.log(res.data._id)
         }
         )
         .catch((err) => {
@@ -64,12 +70,12 @@ const Register = ({ navigation, route }) => {
             console.log(err);
         }
         );
+        
 
   }
 
   console.log(data)
-
-
+  
 
   return (
     <ScrollView
@@ -134,7 +140,7 @@ const Register = ({ navigation, route }) => {
             </View>
             <View style={{ marginTop: 50 }}>
               <Button title='Register' color='#4A7B59'
-                onPress={handleSubmit}
+              onPress={() => handleSubmit()}
               />
             </View>
           </View>
