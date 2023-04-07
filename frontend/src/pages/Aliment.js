@@ -17,7 +17,20 @@ function Aliment() {
         const { name, value } = event.target;
         setAliment({ ...aliment, [name]: value });
     };
+// get
+const getAliment = async () => {
+        const res = await fetch('http://localhost:9000/admin/getAliment', {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${token}`
+            }
+        })
+        const data = await res.json();
+        serdataAliment(data)
+        console.log(data)
 
+    }
     const handleSubmit = (event) => {
         event.preventDefault();
         // http://localhost:9000/admin/addAliment
@@ -32,8 +45,20 @@ function Aliment() {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
-                // Rafraîchir la page
-                window.location.reload();
+                if (data) {
+                    Swal.fire({
+                        position: 'top-end',
+                        icon: 'success',
+                        title: 'Ajouter avec succès',
+                        showConfirmButton: false,
+                        timer: 1500
+                    })
+                    // reload() apre timer: 1500
+                    setTimeout(() => {
+                        window.location.reload();
+                    }
+                        , 1500);
+                }
             })
             .catch(err => {
                 console.log(err)
@@ -54,6 +79,7 @@ function Aliment() {
             .then(res => res.json())
             .then(data => {
                 console.log(data)
+                
               if(data){
                 Swal.fire({
                   position: 'top-end',
@@ -78,21 +104,8 @@ function Aliment() {
 
     //   useEffect puor get Aliemt
     useEffect(() => {
-        fetch('http://localhost:9000/admin/getAliment', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: `Bearer ${token}`
-            }
-        })
-            .then(res => res.json())
-            .then(data => {
-                serdataAliment(data)
-                console.log(data)
-            })
-            .catch(err => {
-                console.log(err)
-            })
+       
+        getAliment()
     }, [])
     return (
         <div>

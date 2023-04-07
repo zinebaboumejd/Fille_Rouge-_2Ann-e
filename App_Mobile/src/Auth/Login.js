@@ -44,7 +44,8 @@ const Login = ({ navigation }) => {
     setLoading(true);
     axios({
       method: "post",
-      url: "http://192.168.9.46:9000/auth/login",
+      // url: "http://192.168.9.46:9000/auth/login",
+     url: "http://192.168.1.18:9000/auth/login",
       data: {
         email: email,
         password: password,
@@ -56,6 +57,22 @@ const Login = ({ navigation }) => {
     .then((res) => {
       setLoading(false);
       console.log(res.data);
+          
+AsyncStorage.setItem('token', res.data.token)
+.then(() => {
+  console.log('Token stored successfully.');
+})
+.catch((error) => {
+  console.log('Error storing token: ', error);
+});
+    
+AsyncStorage.setItem('id', res.data._id)
+.then(() => {
+  console.log('id stored successfully.');
+})
+.catch((error) => {
+  console.log('Error storing id: ', error);
+});
       navigate.navigate("Home");
       Toast.show({
         type: 'success',
@@ -116,9 +133,11 @@ const Login = ({ navigation }) => {
               <Text style={{ color: 'red', fontStyle: 'italic' }}>Forgot Password?</Text>
             </View>
             <View style={{ marginTop: 50 }}>
-              <Button title='Login' color='#4A7B59'
-                onPress={handleSubmit}             
-               />
+              <Button
+                title='Login'
+                color='#4A7B59'
+                onPress={handleSubmit}
+              />
             </View>
           </View>
         </View>

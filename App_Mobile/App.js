@@ -8,17 +8,29 @@ import Register from './src/Auth/Register';
 import Home from './src/pages/Home';
 import Corps from "./src/pages/Corps";
 
+import COLORS from './src/views/navigation/BottomNavigator';
+import DetailsScreen from './src/views/screens/DetailsScreen'
+import BottomNavigator from './src/views/navigation/BottomNavigator';
+
+import { createDrawerNavigator } from '@react-navigation/drawer';
+
+const Drawer = createDrawerNavigator();
 const Tab = createMaterialBottomTabNavigator();
 const Stack = createNativeStackNavigator();
 export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator>  
+
+      <Stack.Navigator screenOptions={false}
+      initialRouteName="Home"
+      >  
+      <Stack.Screen name="Login" component={Login} />
+       <Stack.Screen name="Home" component={BottomNavigator} />
         <Stack.Screen name="Register" component={Register} />
       <Stack.Screen name="Corps" component={Corps} />
-        <Stack.Screen name="Login" component={Login} />
+        
       
-        <Stack.Screen name="Home" component={Home} />
+       
       </Stack.Navigator>
     </NavigationContainer>
   );

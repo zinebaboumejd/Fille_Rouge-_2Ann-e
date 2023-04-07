@@ -5,6 +5,7 @@ import Said_Bar from './components/Said_Bar';
 import Ajouter_Employer from './pages/Ajouter_Employer';
 import Aliment from './pages/Aliment'
 import Repas from './pages/Repas';
+import Category  from './pages/Category'
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
           <Route path="/Ajouter_Employer" element={<Ajouter_Employer />} />
           <Route path="/Aliment" element={<Aliment />} />
           <Route path="/Repas" element={<Repas />} />
+          <Route path="/Category" element={<Category />} />
 
         </Routes>
       </Router>

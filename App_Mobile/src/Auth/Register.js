@@ -38,7 +38,7 @@ const Register = ({ navigation}) => {
     setLoading(true);
     axios({
         method: "post",
-        url: "http://192.168.9.46:9000/auth/register",
+        url: "http://192.168.1.18:9000/auth/register",
         data: {
             nom: data.nom,
             prenom: data.prenom,
