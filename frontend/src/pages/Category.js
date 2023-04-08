@@ -59,17 +59,19 @@ function Category() {
                         Swal.fire({
                           position: 'top-end',
                           icon: 'success',
-                          title: 'Supprimer avec succès',
+                          title: 'Ajouter avec succès',
                           showConfirmButton: false,
                           timer: 1500
                         })
                         // vider les champ
-                       
+                        const form = document.querySelector('form'); // ou utiliser votre propre sélecteur pour obtenir l'élément de formulaire
+          form.reset();
                     }
                     
                 }
             })
     }
+    
 
     const handleDelete = (id) => {
         fetch(`http://localhost:9000/admin/deleteCategory/${id}`, {

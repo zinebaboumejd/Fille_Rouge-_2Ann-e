@@ -17,7 +17,7 @@ router.route("/deleteAliment/:id").delete(protect,role("admin"),deleteAliment);
 router.route("/updateAliment/:id").put(protect,role("admin"),updateAliment);
 
 router.route("/getRepas").get(getRepas);
-router.route("/addRepas").post(role("admin"),addRepas);
+router.route("/addRepas").post(protect,role("admin"),addRepas);
 router.route("/deleteRepas/:id").delete(protect,role("admin"),deleteRepas);
 router.route("/updateRepas/:id").put(protect,role("admin"),updateRepas);
 

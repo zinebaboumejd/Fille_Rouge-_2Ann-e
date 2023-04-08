@@ -24,6 +24,9 @@ const CorpsSchema = mongoose.Schema(
         type: String,
         required: [true, "S'il vous plaît entrez votre Taille"],
     },
+    imc:{
+        type: String,
+    }
     },
     {
         timestamp: true,

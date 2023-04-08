@@ -5,15 +5,23 @@ const RepasSchema = mongoose.Schema({
         type: String,
         required: [true, "S'il vous plaît entrez votre nom"],
     },
-    // date: {
-    //     type: Date,
-    //     required: [true, "S'il vous plaît entrez votre date"],
-    // },
-  
-    aliments: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: 'Aliment',
+    aliments:
+    [{
+        aliment:{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: 'Aliment',
+        },
+        quantite:{
+            type: Number,
+            required: [true, "S'il vous plaît entrez votre quantite"],
+        },
     }],
+    // categore
+    category:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Category',
+    },
+   
 
 }, {
     timestamp: true,

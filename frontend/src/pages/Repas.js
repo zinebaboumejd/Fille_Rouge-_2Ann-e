@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 function Repas() {
   const [Repas, setRepas] = useState([])
   const [aliments, setAliments] = useState([])
+  const [categorys, setCategory] = useState([])
   const token = localStorage.getItem('token')
   const [selectedAliments, setSelectedAliments] = useState([]) // tableau pour stocker les aliments sélectionnés et ajoutés
   const [newAliment, setNewAliment] = useState('') // pour stocker le nouvel aliment ajouté
@@ -15,17 +16,17 @@ function Repas() {
       method: 'GET',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        // 'Authorization': `Bearer ${token}`
       }
     })
     const data = await res.json()
     setAliments(data)
   }
- 
+
   const annulerAliment = (alimentASupprimer) => {
     setSelectedAliments(selectedAliments.filter((aliment) => aliment !== alimentASupprimer));
   };
- 
+
 
   const handleChange = (e) => {
     const listeAlemment = document.getElementById('listeAlemment')
@@ -85,7 +86,7 @@ function Repas() {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
-        Authorization: `Bearer ${token}`
+        'Authorization': `Bearer ${token}`
       },
       body: JSON.stringify(dataArray)
 
@@ -131,12 +132,25 @@ function Repas() {
       window.location.reload();
     }
       , 1500);
-
-
   }
+  // getcategory
+  const getCategory = async () => {
+    const res = await fetch('http://localhost:9000/admin/getCategory', {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${token}`
+      }
+    })
+    const data = await res.json()
+    setCategory(data)
+    console.log('category data', data)
+  }
+
   useEffect(() => {
     getAliment()
     getRepas()
+    getCategory()
     // console.log('repas',Repas)
 
   }, [])
@@ -155,6 +169,26 @@ function Repas() {
                 <input type="text" name='nom'
                   onChange={handleChange}
                   className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="Nom Aliment" />
+              </div>
+            </div>
+          </div>
+
+          <div className="flex -mx-3">
+            <div className="w-full px-3 mb-5">
+              <label for="" className="text-xs font-semibold px-1">Categorys</label>
+              <div className="flex">
+                <div className="w-10 z-10 pl-1 text-center pointer-events-none flex items-center justify-center"><i className="mdi mdi-email-outline text-gray-400 text-lg"></i></div>
+                <select name='nomAliment'
+                  onChange={handleChange}
+                  className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="Nom Aliment" >
+                  <option value="">Selectionner un category</option>
+                  {
+                    categorys.map((category) => (
+                      <option value={category._id}>{category.name}</option>
+                    )
+                    )
+                  }
+                </select>
               </div>
             </div>
           </div>
