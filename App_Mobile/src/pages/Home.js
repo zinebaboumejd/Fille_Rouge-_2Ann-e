@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Dimensions,
   Image,
@@ -16,18 +16,42 @@ import {
 } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '.././consts/colors';
-import categories from '.././consts/categories';
-import foods from '.././consts/foods';
+import img from '../assets/cheesePizza.png'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
-const {width} = Dimensions.get('screen');
+const { width } = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
-const Home = ({navigation}) => {
+const Home = ({ navigation }) => {
   const [selectedCategoryIndex, setSelectedCategoryIndex] = useState(0);
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [repat, setRepas] = useState([]);
+  const [categorys, setCategorys] = useState([]);
+
+  // const handleCardPress = () => {
+  //   navigation.navigate('Detail');
+  // };
+
+  // getcategorys
+  const getcategorys = () => {
+    setLoading(true);
+    axios({
+      method: 'get',
+      url: 'http://192.168.1.18:9000/admin/getCategory'
+    })
+      .then((res) => {
+        setLoading(false);
+        console.log('categorys', res.data);
+        setCategorys(res.data);
+      })
+      .catch((err) => {
+        setLoading(false);
+        console.log(err);
+      });
+  };
+
 
   const getRepas = () => {
     setLoading(true);
@@ -40,6 +64,8 @@ const Home = ({navigation}) => {
     })
       .then((res) => {
         setLoading(false);
+        setRepas(res.data);
+        console.log('repas', res.data);
         console.log(res.data);
       })
       .catch((err) => {
@@ -48,68 +74,129 @@ const Home = ({navigation}) => {
       });
   };
 
- 
+
   useEffect(() => {
     getRepas();
+    getcategorys();
   }, []);
 
-
   return (
-    <SafeAreaView style={{flex: 1, backgroundColor: COLORS.white}}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <View style={style.header}>
         <View style={style.inputContainer}>
           <Icon name="search" size={28} />
           <TextInput
             placeholder="Search for food"
-            style={{fontSize: 18, width: '100%', paddingHorizontal: 20}}
+            style={{ fontSize: 18, width: '100%', paddingHorizontal: 20 }}
           />
-          </View>
-          <TouchableOpacity style={style.sortBtn}>
-            <Icon name="sort" size={28} color={COLORS.white} />
-          </TouchableOpacity>         
+        </View>
+        <TouchableOpacity style={style.sortBtn}>
+          <Icon name="sort" size={28} color={COLORS.white} />
+        </TouchableOpacity>
       </View>
 
-      <ScrollView
-        horizontal
-        showsHorizontalScrollIndicator={false}
-        contentContainerStyle={style.categoriesListContainer}>
-        {categories.map((category, index) => (
-          <TouchableOpacity
-            key={index}
-            activeOpacity={0.8}
-            onPress={() => setSelectedCategoryIndex(index)}>
-            <View
-              style={{
-                backgroundColor:
-                  selectedCategoryIndex == index
-                    ? COLORS.primary
-                    : COLORS.secondary,
-                ...style.categoryBtn,
-              }}>
-              <View style={style.categoryBtnImgCon}>
-                <Image
-                  source={category.image}
-                  style={{height: 35, width: 35, resizeMode: 'cover'}}
-                />
-              </View>
-              <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: 'bold',
-                  marginLeft: 10,
-                  color:
-                    selectedCategoryIndex == index
-                      ? COLORS.white
-                      : COLORS.primary,
-                }}>
-                {category.name}
-              </Text>
-            </View>
+      <View style={{ flex: 1, paddingHorizontal: 20, marginTop: 20 }}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={style.categoriesListContainer}>
+          {
+            categorys.map((category, index) => (
+              <TouchableOpacity
+                key={index}
+                activeOpacity={0.8}
+                onPress={() => setSelectedCategoryIndex(index)}>
+                <View
+                  style={{
+                    backgroundColor:
+                      selectedCategoryIndex == index
+                        ? COLORS.primary
+                        : COLORS.secondary,
+                    ...style.categoryBtn,
+                  }}>
+                  <View style={style.categoryBtnImgCon}>
+                    {/* <Image
+                      source={category.image}
+                      style={{height: 35, width: 35, resizeMode: 'cover'}}
+                    /> */}
+                  </View>
+                  <Text
+                    style={{
+                      fontSize: 15,
+                      fontWeight: 'bold',
+                      marginLeft: 6,
+                      color:
+                        selectedCategoryIndex == index
+                          ? COLORS.white
+                          : COLORS.primary,
+                    }}>
+                    {category.name}
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            ))
+          }
+
+        </ScrollView>
+        {/* <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+          Popular Foods
+        </Text> */}
+        <FlatList
+          numColumns={2}
+          data={repat}
+          style={{
+            marginTop: 20,
+            paddingHorizontal: 5,
+              marginLeft:-15
+          }}
+          renderItem={({ item }) => (
+            <TouchableHighlight
+        underlayColor={COLORS.white}
+        activeOpacity={0.9}
+        // onPress={() => navigation.navigate('DetailsScreen', food)}
+        >
+        <View style={style.card}>
+        <TouchableOpacity 
+        // onPress={handleCardPress} 
+        activeOpacity={0.8}>
+          <View style={{alignItems: 'center', top: -40}}>
+            <Image source={img} style={{height: 120, width: 120}} />
+          </View>
           </TouchableOpacity>
-        ))}
-      </ScrollView>
-      
-      
+          <View style={{marginHorizontal: 20}}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+              {item.name}
+            </Text>
+            <Text style={{fontSize: 14, color: COLORS.primary, marginTop: 2}}>
+              {item.description}
+            </Text>
+          </View>
+          <View
+            style={{
+              marginTop: 10,
+              marginHorizontal: 20,
+              flexDirection: 'row',
+              justifyContent: 'space-between',
+            }}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+              {item.nom} 
+            </Text>
+            <View style={style.addToCartBtn}>
+              <Icon name="bookmark" size={20} color={COLORS.white} />
+            </View>
+          </View>
+
+          </View>
+        </TouchableHighlight>
+          )}
+          keyExtractor={(item) => item.id}
+        />
+      </View>
+
+
+      {/* affiche repate */}
+
+
     </SafeAreaView>
   );
 };
@@ -134,13 +221,14 @@ const style = StyleSheet.create({
     width: 50,
     height: 50,
     marginLeft: 10,
-    backgroundColor: COLORS.vertfance,
+    backgroundColor: COLORS.primary,
     borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
   },
   categoriesListContainer: {
-    paddingVertical: 10,
+    paddingVertical: 30,
+    alignItems: 'center',
     paddingHorizontal: 20,
   },
   categoryBtn: {
@@ -174,10 +262,9 @@ const style = StyleSheet.create({
     height: 30,
     width: 30,
     borderRadius: 20,
-    backgroundColor: COLORS.vertfance,
+    backgroundColor: COLORS.primary,
     justifyContent: 'center',
     alignItems: 'center',
   },
 });
-
 export default Home;

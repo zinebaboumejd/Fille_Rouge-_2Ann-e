@@ -5,17 +5,18 @@ const Repas=require ("../Models/RepasModels")
 
 // /get user
 const getRepas = asyncHandler(async (req, res) => {
-    const repas = await Repas.find().populate("aliments.aliment")
+    const repas = await Repas.find().populate('aliments')
     res.json(repas);
 });
 
 // addRepas
 const addRepas = asyncHandler(async (req, res) => {
-    const {nom,aliments,category}=req.body;
+    const {nom,aliments,category,preparation}=req.body;
     const repas = await Repas.create({
         nom,
         aliments,
         category,
+        preparation
     });
     if (repas) {
         res.status(201).json({
@@ -23,6 +24,8 @@ const addRepas = asyncHandler(async (req, res) => {
             nom: repas.nom,
             aliments: repas.aliments,
             category: repas.category,
+            preparation:repas.preparation,
+
         });
     } else {
         res.status(400);
@@ -45,12 +48,13 @@ const deleteRepas = asyncHandler(async (req, res) => {
 );
 // updateRepas
 const updateRepas = asyncHandler(async (req, res) => {
-    const {nom,aliments,category}=req.body;
+    const {nom,aliments,category,preparation}=req.body;
     const repas = await Repas.findById(req.params.id);
     if (repas) {
         repas.nom = nom;
         repas.aliments = aliments;
         repas.category = category;
+        repas.preparation = preparation;
 
         const updatedRepas = await repas.save();
         res.json({
@@ -58,6 +62,7 @@ const updateRepas = asyncHandler(async (req, res) => {
             nom: updatedRepas.nom,
             aliments: updatedRepas.aliments,
             category: updatedRepas.category,
+            preparation:updatedRepas.preparation,
         });
     } else {
         res.status(404);

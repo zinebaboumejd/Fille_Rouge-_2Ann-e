@@ -13,7 +13,8 @@ const RepasSchema = mongoose.Schema({
         },
         quantite:{
             type: Number,
-            required: [true, "S'il vous plaît entrez votre quantite"],
+            default:100
+            // required: [true, "S'il vous plaît entrez votre quantite"],
         },
     }],
     // categore
@@ -21,6 +22,10 @@ const RepasSchema = mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Category',
     },
+    preparation: {
+        type: String,
+        required: [true, "S'il vous plaît entrez votre preparation"],
+    }
    
 
 }, {

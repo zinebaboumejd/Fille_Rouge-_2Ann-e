@@ -7,7 +7,7 @@ import Login from './src/Auth/Login';
 import Register from './src/Auth/Register';
 import Home from './src/pages/Home';
 import Corps from "./src/pages/Corps";
-
+import Detail from './src/pages/Detail'
 import COLORS from './src/views/navigation/BottomNavigator';
 import DetailsScreen from './src/views/screens/DetailsScreen'
 import BottomNavigator from './src/views/navigation/BottomNavigator';
@@ -22,8 +22,9 @@ export default function App() {
     <NavigationContainer>
 
       <Stack.Navigator screenOptions={false}
-      initialRouteName="Home"
+      initialRouteName="Home"   options={{ headerShown: false }}
       >  
+        <Stack.Screen name="Detail" component={Detail} options={{ headerShown: false }} />
       <Stack.Screen name="Login" component={Login} />
        <Stack.Screen name="Home" component={BottomNavigator} />
         <Stack.Screen name="Register" component={Register} />
