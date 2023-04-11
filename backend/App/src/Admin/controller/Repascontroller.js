@@ -9,6 +9,19 @@ const getRepas = asyncHandler(async (req, res) => {
     res.json(repas);
 });
 
+// getRepasById
+const getRepasById = asyncHandler(async (req, res) => {
+    const repas = await Repas.findById(req.params.id).populate('aliments')
+    if (repas) {
+        res.json(repas);
+    } else {
+        res.status(404);
+        throw new Error("Repas not found");
+    }
+}
+);
+
+
 // addRepas
 const addRepas = asyncHandler(async (req, res) => {
     const {nom,aliments,category,preparation}=req.body;
@@ -80,6 +93,7 @@ module.exports = {
     addRepas,
     deleteRepas,
     updateRepas,
+    getRepasById
 
   
 };

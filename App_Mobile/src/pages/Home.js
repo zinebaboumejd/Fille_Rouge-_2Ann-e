@@ -16,7 +16,7 @@ import {
 } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '.././consts/colors';
-import img from '../assets/cheesePizza.png'
+import img from '../assets/loaf-2796393_1920.jpg'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
@@ -30,9 +30,7 @@ const Home = ({ navigation }) => {
   const [repat, setRepas] = useState([]);
   const [categorys, setCategorys] = useState([]);
 
-  // const handleCardPress = () => {
-  //   navigation.navigate('Detail');
-  // };
+ 
 
   // getcategorys
   const getcategorys = () => {
@@ -153,14 +151,25 @@ const Home = ({ navigation }) => {
             <TouchableHighlight
         underlayColor={COLORS.white}
         activeOpacity={0.9}
-        // onPress={() => navigation.navigate('DetailsScreen', food)}
+        onPress={() => navigation.navigate('Detail', { item : item})}
+        // onPress={
+        //   // condole data 
+        //   () => console.log(item)
+        // }
         >
         <View style={style.card}>
         <TouchableOpacity 
         // onPress={handleCardPress} 
         activeOpacity={0.8}>
-          <View style={{alignItems: 'center', top: -40}}>
-            <Image source={img} style={{height: 120, width: 120}} />
+          <View style={{alignItems: 'center', top: -40
+        }}>
+            <Image source={img} style={{height: 120, width: 120,
+            // circcle
+            borderRadius: 60,
+            borderWidth: 4,
+            borderColor: COLORS.white
+
+            }} />
           </View>
           </TouchableOpacity>
           <View style={{marginHorizontal: 20}}>
@@ -255,8 +264,10 @@ const style = StyleSheet.create({
     marginBottom: 20,
     marginTop: 50,
     borderRadius: 15,
+    borderColor:'red',
     elevation: 13,
     backgroundColor: COLORS.white,
+   
   },
   addToCartBtn: {
     height: 30,
