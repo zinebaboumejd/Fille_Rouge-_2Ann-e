@@ -4,9 +4,31 @@ import { ScrollView } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '.././consts/colors';
 import img from '../assets/loaf-2796393_1920.jpg'
+import { TouchableOpacity } from 'react-native-gesture-handler';
+import axios from 'axios';
 
 // import {SecondaryButton} from '../components/Button';
 function Detail({ navigation, route }) {
+
+  const [category, setCategory] = useState(null); // State pour stocker la catégorie
+
+  useEffect(() => {
+    // Utiliser getCategoryById pour récupérer la catégorie associée au repas
+    const fetchCategory = async () => {
+      try {
+        const response = await axios.get(`http://192.168.1.18:9000/admin/getCategoryById/${item.categoryId}`);
+        setCategory(response.data);
+        console.log(
+          'category',
+          response.data
+        )
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchCategory();
+  }, []);
 
   // fetrch repabyId
   const item  = route.params.item;
@@ -16,47 +38,40 @@ function Detail({ navigation, route }) {
    console.log(item)
   }, []);
 
-  
-
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: COLORS.white }}>
       <ScrollView
         contentInsetAdjustmentBehavior="automatic"
         style={{ backgroundColor: COLORS.white }}>
-        <View style={style.header}>
-          <Icon
-            name="arrow-back-ios"
-            size={28}
-            onPress={() => navigation.goBack()}
-          />
-          <View style={style.iconContainer}>
-            <Icon name="favorite" size={28} color={COLORS.primary} />
-          </View>
+
+          {/* map data */}
+          <View style={style.header}>
+          
+         
         </View>
         <View style={{ alignItems: 'center', marginTop: 20 }}>
           <Image source={img} style={{ height: 200, width: 200,
             borderRadius: 100,
             borderWidth: 4,
             borderColor: COLORS.white
-           }} />
+            }} />
         </View>
         <View style={style.details}>
-          <Text style={{ fontSize: 25, fontWeight: 'bold' }}>nom</Text>
+          <Text style={{ fontSize: 25, fontWeight: 'bold' }}>{item.nom}</Text>
           <Text style={{ fontSize: 18, color: 'black', marginTop: 5 }}>
-          nom 
+          {item.preparation}
           </Text>
           <Text style={{ fontSize: 18, color: COLORS.grey, marginTop: 5 }}>
-            description
+           {/* map Categorys byid */}
+           {category ? category.nom : ''}
+    
+          </Text>
+          <Text style={{ fontSize: 18, color: COLORS.grey, marginTop: 5 }}>
+          {/* aliment */}
+         
           </Text>
           </View>
-          {
-            repas.map((item) => {
-            <Text style={{ color:"red"}}>
-              {item.nom}
-            </Text>
-          }
-          )
-          }
+          
       </ScrollView>
     </SafeAreaView>
   );
@@ -78,6 +93,7 @@ const style = StyleSheet.create({
     backgroundColor: COLORS.primary,
     borderTopRightRadius: 40,
     borderTopLeftRadius: 40,
+    height:800
   },
   iconContainer: {
     backgroundColor: COLORS.white,

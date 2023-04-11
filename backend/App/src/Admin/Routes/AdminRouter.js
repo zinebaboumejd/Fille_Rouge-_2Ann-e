@@ -5,7 +5,7 @@ const {protect,role}=require('../../../middlewares/authMiddlewre');
 const {getUser,activeDesactive,deleteClient}=require("../controller/GetUser");
 const {getAliment,addAliment,deleteAliment,updateAliment}=require("../controller/AlimentController");
 const {getRepas,addRepas,getRepasById,deleteRepas,updateRepas}=require("../controller/Repascontroller");
-const {getCategory,addCategory,deleteCategory,updateCategory}=require("../controller/CategoryController")
+const {getCategory,addCategory,getCategoryById,deleteCategory,updateCategory}=require("../controller/CategoryController")
 
 router.route("/getUser").get(protect,role("admin"),getUser);
 router.route("/activeDesactive/:id").put(protect,role("admin"),activeDesactive);
@@ -26,6 +26,7 @@ router.route("/getCategory").get(getCategory);
 router.route("/addCategory").post(protect,role("admin"),addCategory);
 router.route("/deleteCategory/:id").delete(protect,role("admin"),deleteCategory);
 router.route("/updateCategory/:id").put(protect,role("admin"),updateCategory);
+router.route("/getCategoryById/:id").get(getCategoryById);
 
 
 

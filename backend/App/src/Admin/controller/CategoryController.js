@@ -9,6 +9,13 @@ const getCategory = asyncHandler(async (req, res) => {
 }
 );
 
+// byid
+const getCategoryById = asyncHandler(async (req, res) => {
+    const categorys = await category.findById(req.params.id);
+    res.json(categorys);
+}
+);
+
 // add category
 const addCategory = asyncHandler(async (req, res) => {
     const { name ,description} = req.body;
@@ -45,5 +52,6 @@ module.exports = {
     getCategory,
     addCategory,
     deleteCategory,
-    updateCategory
+    updateCategory,
+    getCategoryById
 }
