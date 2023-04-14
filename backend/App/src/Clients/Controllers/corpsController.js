@@ -7,7 +7,7 @@ const asyncHandler = require("express-async-handler");
 // @route   GET /api/corps
 // @access  Public
 const getCorps = asyncHandler(async (req, res) => {
-    const corps = await Corps.find({});
+    const corps = await Corps.find({}).populate('iduser');
     res.json(corps);
 }
 );
@@ -25,6 +25,33 @@ const getCorpsById = asyncHandler(async (req, res) => {
     }
 }
 );
+// getcorps byiduser
+const getCorpsByIdUser = asyncHandler(async (req, res) => {
+    // Récupérer l'ID de l'utilisateur à partir des paramètres de la requête
+    const userId = req.params._id;
+  
+    try {
+      // Effectuer une recherche dans la base de données pour récupérer le corps associé à l'ID de l'utilisateur
+      const corps = await Corps.findOne({ userId });
+
+  
+      // Vérifier si un corps a été trouvé
+      if (corps) {
+        // Retourner le corps en tant que réponse
+        res.status(200).json(corps);
+      } else {
+        // Si aucun corps n'a été trouvé, retourner un message d'erreur
+        res.status(404).json({ message: "Aucun corps trouvé pour cet utilisateur" });
+      }
+    } catch (error) {
+      // Gérer les erreurs de manière appropriée
+      res.status(500).json({ message: "Une erreur s'est produite lors de la récupération du corps", error });
+    }
+  });
+  
+  
+  
+  
 
 // @desc    Delete a corps
 // @route   DELETE /api/corps/:id
@@ -45,19 +72,29 @@ const deleteCorps = asyncHandler(async (req, res) => {
 // @route   POST /api/corps
 // @access  Private/Client
 const createCorps = asyncHandler(async (req, res) => {
+    // Récupérer les données du corps à partir du corps de la requête
+    const { age, sexe, poits, taille } = req.body;
+  
+    // Calculer l'IMC
+    const poids = parseFloat(poits);
+    const imc = poids / (taille * taille);
+  
+    // Créer un nouvel objet Corps avec les données et l'IMC calculé
     const corps = new Corps({
-        //   iduser connercter
-        iduser: req.user._id,
-        age: req.body.age,
-        sexe: req.body.sexe,
-        poits: req.body.poits,
-        taille: req.body.taille,
-
+      iduser: req.user._id,
+      age,
+      sexe,
+      poits,
+      taille,
+      imc: imc.toFixed(2), // Arrondir à 2 décimales
     });
+  
+    // Sauvegarder le nouvel objet Corps dans la base de données
     const createdCorps = await corps.save();
+  
+    // Retourner le nouvel objet Corps créé avec l'IMC calculé dans la réponse
     res.status(201).json(createdCorps);
-}
-);
+  });
 
 // @desc    Update a corps
 // @route   PUT /api/corps/:id
@@ -275,6 +312,7 @@ module.exports = {
     deleteCorps,
     createCorps,
     updateCorps,
-    calculerimc
+    calculerimc,
+    getCorpsByIdUser
 };
 

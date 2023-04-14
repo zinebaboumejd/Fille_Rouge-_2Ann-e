@@ -21,7 +21,6 @@ export default function Corps() {
   const { _id } = route.params.data;
 
 
-
   console.log('iduser', _id)
   const [data, setData] = useState({
     iduser: _id,
@@ -36,7 +35,7 @@ export default function Corps() {
 
     AsyncStorage.getItem('token')
       .then((token) => {
-        axios.post('http://192.168.9.46:9000/client/createRepas', {
+        axios.post('http://192.168.1.18:9000/client/', {
           iduser: data.iduser,
           age: data.age,
           sexe: data.sexe,
@@ -87,6 +86,7 @@ export default function Corps() {
       [key]: value
     });
   }
+  // calculerimc
 
   return (
     <ScrollView style={{ flex: 1, backgroundColor: '#8DBFA9' }}

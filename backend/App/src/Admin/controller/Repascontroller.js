@@ -5,7 +5,7 @@ const Repas=require ("../Models/RepasModels")
 
 // /get user
 const getRepas = asyncHandler(async (req, res) => {
-    const repas = await Repas.find().populate('aliments')
+    const repas = await Repas.find().populate('aliments.aliment')
     res.json(repas);
 });
 
@@ -84,6 +84,18 @@ const updateRepas = asyncHandler(async (req, res) => {
 }
 );
 
+// Search
+const searchRepas = asyncHandler(async (req, res) => {
+    const repas = await Repas.find({nom: req.params.nom}).populate('aliments')
+    if (repas) {
+        res.json(repas);
+    } else {
+        res.status(404);
+        throw new Error("Repas not found");
+    }
+}
+);
+
 
 
 
@@ -93,7 +105,8 @@ module.exports = {
     addRepas,
     deleteRepas,
     updateRepas,
-    getRepasById
+    getRepasById,
+    searchRepas
 
   
 };

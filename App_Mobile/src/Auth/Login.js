@@ -44,8 +44,8 @@ const Login = ({ navigation }) => {
     setLoading(true);
     axios({
       method: "post",
-      // url: "http://192.168.9.46:9000/auth/login",
-     url: "http://192.168.1.18:9000/auth/login",
+      url: "http://192.168.1.18:9000/auth/login",
+    //  url: "http://192.168.137.21:9000/auth/login",
       data: {
         email: email,
         password: password,
@@ -57,7 +57,7 @@ const Login = ({ navigation }) => {
     .then((res) => {
       setLoading(false);
       console.log(res.data);
-          
+          // token
 AsyncStorage.setItem('token', res.data.token)
 .then(() => {
   console.log('Token stored successfully.');
@@ -65,15 +65,15 @@ AsyncStorage.setItem('token', res.data.token)
 .catch((error) => {
   console.log('Error storing token: ', error);
 });
-    
+    // id
 AsyncStorage.setItem('id', res.data._id)
 .then(() => {
-  console.log('id stored successfully.');
+  console.log('Token stored successfully.');
 })
 .catch((error) => {
   console.log('Error storing id: ', error);
 });
-      navigate.navigate("Home");
+      navigation.navigate("Home");
       Toast.show({
         type: 'success',
         text1: 'Connexion réussie',

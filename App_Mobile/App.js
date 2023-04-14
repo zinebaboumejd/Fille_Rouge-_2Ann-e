@@ -11,6 +11,7 @@ import Detail from './src/pages/Detail'
 import COLORS from './src/views/navigation/BottomNavigator';
 import DetailsScreen from './src/views/screens/DetailsScreen'
 import BottomNavigator from './src/views/navigation/BottomNavigator';
+import Profile from './src/pages/Profile'
 
 import { createDrawerNavigator } from '@react-navigation/drawer';
 
@@ -22,13 +23,15 @@ export default function App() {
     <NavigationContainer>
 
       <Stack.Navigator screenOptions={false}
-      initialRouteName="Home"   options={{ headerShown: false }}
+      initialRouteName="Login"   options={{ headerShown: false }}
       >  
-        <Stack.Screen name="Detail" component={Detail}  />
-      <Stack.Screen name="Login" component={Login} />
-       <Stack.Screen name="Home" component={BottomNavigator} />
-        <Stack.Screen name="Register" component={Register} />
-      <Stack.Screen name="Corps" component={Corps} />
+        <Stack.Screen name="Detail" component={Detail}  options={{ headerShown: false }} />
+      <Stack.Screen name="Login" component={Login}  options={{ headerShown: false }}/>
+       <Stack.Screen name="Home" component={BottomNavigator}  options={{ headerShown: false }}/>
+        <Stack.Screen name="Register" component={Register}  options={{ headerShown: false }}/>
+      <Stack.Screen name="Corps" component={Corps}  options={{ headerShown: false }}/>
+      <Stack.Screen name="Profile" component={Profile}  options={{ headerShown: false }}/>
+     
         
       
        

@@ -7,16 +7,11 @@ function Said_Bar() {
     <div>
         <div class="-mx-6 px-6 py-4">
             <a href="#" title="home">
-              hhhhhhhhhhhhhhhhhhhhhhh  {/* <img src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg" class="w-32" alt="tailus logo"> */}
+              Admin {/* <img src="https://tailus.io/sources/blocks/stats-cards/preview/images/logo.svg" class="w-32" alt="tailus logo"> */}
             </a>
         </div>
 
-        <div class="mt-8 text-center">
-            {/* <img src="https://tailus.io/sources/blocks/stats-cards/preview/images/second_user.webp" alt="" class="w-10 h-10 m-auto rounded-full object-cover lg:w-28 lg:h-28"> */}
-            <h5 class="hidden mt-4 text-xl font-semibold text-gray-600 lg:block">Cynthia J. Watts</h5>
-            <span class="hidden text-gray-400 lg:block">Admin</span>
-        </div>
-
+        
         <ul class="space-y-2 tracking-wide mt-8">
             <li>
                 <a href="/dashboard" aria-label="dashboard" class="relative px-4 py-3 flex items-center space-x-4 rounded-xl text-white bg-gradient-to-r from-sky-600 to-cyan-400">
@@ -28,7 +23,7 @@ function Said_Bar() {
                     <span class="-mr-1 font-medium">Dashboard</span>
                 </a>
             </li>
-            <li>
+            {/* <li>
                 <a href="/Ajouter_Employer" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path class="fill-current text-gray-300 group-hover:text-cyan-300" fill-rule="evenodd" d="M2 6a2 2 0 012-2h4l2 2h4a2 2 0 012 2v1H8a3 3 0 00-3 3v1.5a1.5 1.5 0 01-3 0V6z" clip-rule="evenodd" />
@@ -36,7 +31,7 @@ function Said_Bar() {
                     </svg>
                     <span class="group-hover:text-gray-700">Ajouter Employer</span>
                 </a>
-            </li>
+            </li> */}
             <li>
                 <a href="/Aliment" class="px-4 py-3 flex items-center space-x-4 rounded-md text-gray-600 group">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">

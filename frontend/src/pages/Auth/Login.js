@@ -28,6 +28,7 @@ function Login() {
     //    tester si role admin
         if (data.role === "admin") {
             localStorage.setItem('token', data.token);
+            localStorage.setItem('id',data.id)
             localStorage.setItem('role', data.role);
             window.location.href = "/";
         }

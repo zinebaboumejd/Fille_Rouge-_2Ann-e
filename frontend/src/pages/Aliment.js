@@ -189,6 +189,12 @@ const getAliment = async () => {
                                                 <table className="min-w-full divide-y divide-gray-200">
                                                     <thead>
                                                         <tr>
+                                                        <th
+                                                                className="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                                                <div className="flex cursor-pointer">
+                                                                    <span className="mr-2"></span>
+                                                                </div>
+                                                            </th>
                                                             <th
                                                                 className="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                                                 <div className="flex cursor-pointer">
@@ -198,7 +204,7 @@ const getAliment = async () => {
                                                             <th
                                                                 className="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                                                 <div className="flex cursor-pointer">
-                                                                    <span className="mr-2">Stock</span>
+                                                                    <span className="mr-2"></span>
                                                                 </div>
                                                             </th>
 
@@ -215,6 +221,12 @@ const getAliment = async () => {
                                                             <tr>
                                                                 <td
                                                                     className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                                                    <p></p>
+                                                                    <p className="text-xs text-gray-400"></p>
+
+                                                                </td>
+                                                                <td
+                                                                    className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                                     <p>{dataAliment.nom}</p>
                                                                     <p className="text-xs text-gray-400">{dataAliment.prenom}</p>
 
@@ -228,7 +240,7 @@ const getAliment = async () => {
                                                                 <td
                                                                     className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                                                     <div className="flex space-x-4">
-                                                                        <a href="#" className="text-blue-500 hover:text-blue-600">
+                                                                        {/* <a href="#" className="text-blue-500 hover:text-blue-600">
                                                                             <svg xmlns="http://www.w3.org/2000/svg"
                                                                                 className="w-5 h-5 mr-1"
                                                                                 fill="none" viewBox="0 0 24 24"
@@ -239,7 +251,7 @@ const getAliment = async () => {
                                                                                     d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
                                                                             </svg>
                                                                             <p>Edit</p>
-                                                                        </a>
+                                                                        </a> */}
                                                                         <button
                                                                             className="text-red-500 hover:text-red-600"
                                                                             onClick={() => deleteAliment(dataAliment._id)}

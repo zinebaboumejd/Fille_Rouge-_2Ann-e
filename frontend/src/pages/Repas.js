@@ -33,6 +33,7 @@ function Repas() {
     })
     const data = await res.json()
     setAliments(data)
+    console.log('alm',aliments)
   }
 
   const annulerAliment = (alimentASupprimer) => {
@@ -43,7 +44,8 @@ function Repas() {
   const handleChange = (e) => {
     const listeAlemment = document.getElementById('listeAlemment')
     listeAlemment.innerHTML = ''
-    selectedAliments.map((aliment) => {
+    selectedAliments.map((aliments) => {
+      console.log('test all',aliments)
       const div = document.createElement('div')
       //  afficher le non de alimment
       div.innerHTML = `<div class="flex items-center justify-between">
@@ -52,7 +54,9 @@ function Repas() {
         </div>
         <div class="ml-4">
           <div class="text-sm font-medium text-gray-900">
-            ${aliment}
+          ${
+             aliments
+          }
           </div>
         </div>
       </div>
@@ -115,13 +119,25 @@ function Repas() {
   const addRepas = async (e) => {
     e.preventDefault();
     try {
+      // Calculer le total des calories des aliments
+      let totalCalories = 0;
+      data.aliments.forEach(aliment => {
+        totalCalories += aliment.aliment.calorie * (aliment.quantite / 100);
+      });
+  
       const res = await fetch('http://localhost:9000/admin/addRepas', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${token}`,
         },
-        body: JSON.stringify(data),
+        body: JSON.stringify({
+          nom: data.nom,
+          aliments: data.aliments,
+          categorys: data.categorys,
+          preparation: data.preparation,
+          calorie: totalCalories, // Ajouter la valeur totale des calories calculée
+        }),
       });
       const newRepas = await res.json();
       setRepas([...Repas, newRepas]);
@@ -154,6 +170,7 @@ function Repas() {
       });
     }
   };
+  
   
   
 
@@ -264,6 +281,7 @@ function Repas() {
                 <select name='aliments'
                   onChange={handleChange}
                   className="w-full -ml-10 pl-10 pr-3 py-2 rounded-lg border-2 border-gray-200 outline-none focus:border-indigo-500" placeholder="Nom Aliment" >
+             
                   <option value="">Selectionner un aliment</option>
                   {
                     aliments.map((aliment) => (
@@ -275,6 +293,7 @@ function Repas() {
               </div>
             </div>
           </div>
+        
 
           <div className="flex -mx-3">
             <div className="w-full px-3 mb-5">
@@ -304,6 +323,15 @@ function Repas() {
               </div>
             </div>
           </div>
+          {/* input reden */}
+
+        <input type='hidden' name='calorie' 
+        onChange={handleChange}
+        // aliments.aliment.calorie
+       />
+
+
+
           <div className="flex -mx-3">
             <div className="w-full px-3 mb-5">
               <button type="submit" className="block w-full max-w-xs mx-auto bg-indigo-500 hover:bg-indigo-700 focus:bg-indigo-700 text-white rounded-lg px-3 py-3 font-semibold"
@@ -336,13 +364,19 @@ function Repas() {
                                   <span className="mr-2">PRODUCT NAME</span>
                                 </div>
                               </th>
+                            
                               <th
                                 className="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 <div className="flex cursor-pointer">
                                   <span className="mr-2">Aliments</span>
                                 </div>
                               </th>
-
+                              <th
+                                className="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
+                                <div className="flex cursor-pointer">
+                                  <span className="mr-2">calorie</span>
+                                </div>
+                              </th>
                               <th
                                 className="px-6 py-3 bg-gray-50 text-xs leading-4 font-medium text-gray-500 uppercase tracking-wider">
                                 <div className="flex cursor-pointer">
@@ -357,16 +391,24 @@ function Repas() {
                                 <td
                                   className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                   <p>{Repas.nom}</p>
-                                  <p className="text-xs text-gray-400">{Repas.prenom}</p>
+                                  
                                 </td>
                                 <td
                                   className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
                                   <ul >
+                                    {Repas.aliments.map((aliment) => (
+                                      <li>{aliment.aliment.nom}</li>
+                                    ))}
+                                  </ul>
+                                </td>
+                                <td
+                                  className="px-6 py-4 whitespace-no-wrap text-sm leading-5">
+                                  <ul >
+                                    {/* affichage calorie */}
                                   
-                                   {/*  { $elemMatch: { _id: ObjectId("_id_aliment") } } } */}
-                                     
-
-
+                                      <li>{Repas.calorie}</li>
+                                
+                                  
                                   </ul>
                                 </td>
 

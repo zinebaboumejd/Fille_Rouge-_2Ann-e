@@ -5,6 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import Swal from "sweetalert2";
 import "react-toastify/dist/ReactToastify.css";
 import Entete from '../components/Entete';
+
 function Dashboard() {
   // tocken
   const [token, setToken] = useState(localStorage.getItem('token'));

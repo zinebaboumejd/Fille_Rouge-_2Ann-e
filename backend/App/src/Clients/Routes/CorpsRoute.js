@@ -8,15 +8,16 @@ const {
     deleteCorps,
     createCorps,
     updateCorps,
+    getCorpsByIdUser
 } = require("../Controllers/corpsController");
 
 
 // Autorization client
-router.route("/getRepas").get(protect, role('client'), getCorps);
-router.route("/getRepasById/:id").get(protect, role('client'), getCorpsById);
-router.route("/deleteRepas/:id").delete(protect, role('client'), deleteCorps);
-router.route("/createRepas").post(protect, role('client'), createCorps);
-router.route("/updateRepas/:id").put(protect, role('client'), updateCorps);
+router.use(protect);
+router.use(role('client'));
 
+router.route("/").get(getCorps).post(createCorps);
+router.route("/:id").get(getCorpsById).put(updateCorps).delete(deleteCorps);
+router.route("/getCorpsByIdUser/:id").get(getCorpsByIdUser);
 
 module.exports = router;

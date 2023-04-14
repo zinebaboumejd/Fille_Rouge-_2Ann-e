@@ -26,6 +26,7 @@ const Register = ({ navigation}) => {
     password: "",
   });
   
+
   function handleChange(key, value) {
     setData(prevState => ({
       ...prevState,
@@ -39,6 +40,7 @@ const Register = ({ navigation}) => {
     axios({
         method: "post",
         url: "http://192.168.1.18:9000/auth/register",
+        // url: "http://192.168.137.21:9000/auth/register",
         data: {
             nom: data.nom,
             prenom: data.prenom,
@@ -54,6 +56,10 @@ const Register = ({ navigation}) => {
             console.log(res.data);
             
 AsyncStorage.setItem('token', res.data.token)
+.then(() => {
+  console.log('Token stored successfully.');
+})
+AsyncStorage.setItem('id', res.data._id)
 .then(() => {
   console.log('Token stored successfully.');
 })

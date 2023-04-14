@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-
+const Joi = require('joi');
 const RepasSchema = mongoose.Schema({
     nom: {
         type: String,
@@ -25,7 +25,12 @@ const RepasSchema = mongoose.Schema({
     preparation: {
         type: String,
         required: [true, "S'il vous plaît entrez votre preparation"],
-    }
+    },
+    calorie: {
+        type: Number,
+        default:400,
+        required: [true, "S'il vous plaît entrez votre calories"],
+     },
    
 
 }, {

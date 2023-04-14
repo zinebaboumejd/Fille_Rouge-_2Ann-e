@@ -6,22 +6,27 @@ import Ajouter_Employer from './pages/Ajouter_Employer';
 import Aliment from './pages/Aliment'
 import Repas from './pages/Repas';
 import Category  from './pages/Category'
+import Page404 from './pages/Page404';
 
 
 function App() {
-  // const tocken =localStorage.getItem('tocken')
+  const token =localStorage.getItem('token')
   return (
     <div className="App">
-      <Said_Bar />
+     {
+        token ? <Said_Bar /> : null
+     }
       <Router>
         <Routes>
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/Ajouter_Employer" element={<Ajouter_Employer />} />
-          <Route path="/Aliment" element={<Aliment />} />
-          <Route path="/Repas" element={<Repas />} />
-          <Route path="/Category" element={<Category />} />
+        {/* protecte route */}
+        {token ? <Route path="/" element={<Dashboard />} /> : <Route path="/login" element={<Login />} />}
+        <Route path="/Ajouter_Employer" element={<Ajouter_Employer />} />
+        <Route path="/Aliment" element={<Aliment />} />
+        <Route path="/Repas" element={<Repas />} />
+        <Route path="/Category" element={<Category />} />
+        {/* <Route path="*" element={<Page404 />} /> */}
 
+    
         </Routes>
       </Router>
     </div>

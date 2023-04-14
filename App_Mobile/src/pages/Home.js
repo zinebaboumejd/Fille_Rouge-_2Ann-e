@@ -20,6 +20,7 @@ import img from '../assets/loaf-2796393_1920.jpg'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import axios from 'axios';
 
+
 const { width } = Dimensions.get('screen');
 const cardWidth = width / 2 - 20;
 
@@ -29,8 +30,11 @@ const Home = ({ navigation }) => {
   const [error, setError] = useState('');
   const [repat, setRepas] = useState([]);
   const [categorys, setCategorys] = useState([]);
+  const [user, setUser] = useState([])
+  const [corpbyuser, setCorpbyuser] = useState([])
 
- 
+
+
 
   // getcategorys
   const getcategorys = () => {
@@ -50,7 +54,78 @@ const Home = ({ navigation }) => {
       });
   };
 
+  // // getUserById
+  const getUserById = async () => {
+    setLoading(true);
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const id = await AsyncStorage.getItem('id');
+      console.log('id_user', id)
+    
+      axios({
+        method: 'get',
+        url: `http://192.168.1.18:9000/admin/getUserById/${id}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      })
+        .then((res) => {
+          setLoading(false);
+          console.log('user', res.data);
+          setUser(res.data);
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
+  // getCorpsByIdUser
+  const getCorpsByIdUser = async () => {
+    setLoading(true);
+    try {
+      const token = await AsyncStorage.getItem('token');
+      const iduser = await AsyncStorage.getItem('id');
+      axios({
+        method: 'get',
+        url: `http://192.168.1.18:9000/client/getCorpsByIdUser/${iduser}`,
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+      })
+        .then((res) => {
+          setLoading(false);
+          console.log('corps', res.data);
+          setCorpbyuser(res.data);
+        })
+        .catch((err) => {
+          setLoading(false);
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const filterRepas = (imc, calorie) => {
+    if (imc < 18) {
+      // Filtrer les repas avec moins de 500 calories
+      return calorie < 500;
+    } else if (imc >= 18 && imc <= 25) {
+      // Filtrer les repas avec moins de 800 calories
+      return calorie < 800;
+    } else if (imc > 25) {
+      // Filtrer les repas avec moins de 1000 calories
+      return calorie < 1000;
+    } else {
+      return false;
+    }
+  };
   const getRepas = () => {
     setLoading(true);
     axios({
@@ -62,20 +137,42 @@ const Home = ({ navigation }) => {
     })
       .then((res) => {
         setLoading(false);
+        console.log('Repas', res.data);
         setRepas(res.data);
-        console.log('repas', res.data);
-        console.log(res.data);
+        const filteredRepas = res.data.filter((item) =>
+          filterRepas(corpbyuser.imc, item.calorie)
+        );
+        setRepas(filteredRepas);
+     
+        
       })
       .catch((err) => {
         setLoading(false);
         console.log(err);
       });
   };
+  
+
+
+
+        
+
+
 
 
   useEffect(() => {
-    getRepas();
+    getUserById();
     getcategorys();
+    getCorpsByIdUser();
+setTimeout(
+  function() {
+    getRepas();
+  }
+  .bind(this),
+  1000
+  
+)
+
   }, []);
 
   return (
@@ -139,67 +236,63 @@ const Home = ({ navigation }) => {
         {/* <Text style={{fontSize: 18, fontWeight: 'bold'}}>
           Popular Foods
         </Text> */}
-        <FlatList
-          numColumns={2}
-          data={repat}
-          style={{
-            marginTop: 20,
-            paddingHorizontal: 5,
-              marginLeft:-15
-          }}
-          renderItem={({ item }) => (
-            <TouchableHighlight
-        underlayColor={COLORS.white}
-        activeOpacity={0.9}
-        onPress={() => navigation.navigate('Detail', { item : item})}
-        // onPress={
-        //   // condole data 
-        //   () => console.log(item)
-        // }
-        >
-        <View style={style.card}>
-        <TouchableOpacity 
-        // onPress={handleCardPress} 
-        activeOpacity={0.8}>
-          <View style={{alignItems: 'center', top: -40
+       <FlatList
+  data={repat}
+  renderItem={({ item }) => (
+    <TouchableHighlight
+    underlayColor={COLORS.white}
+    activeOpacity={0.9}
+    onPress={() => navigation.navigate('Detail', { item : item})}
+    // onPress={
+    //   // condole data 
+    //   () => console.log(item)
+    // }
+    >
+    <View style={style.card}>
+    <TouchableOpacity 
+    // onPress={handleCardPress} 
+    activeOpacity={0.8}>
+      <View style={{alignItems: 'center', top: -40
+    }}>
+        <Image source={img} style={{height: 120, width: 120,
+        // circcle
+        borderRadius: 60,
+        borderWidth: 4,
+        borderColor: COLORS.white
+
+        }} />
+      </View>
+      </TouchableOpacity>
+      <View style={{marginHorizontal: 20}}>
+        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+          {item.name}
+        </Text>
+        <Text style={{fontSize: 14, color: COLORS.primary, marginTop: 2}}>
+          {item.description}
+        </Text>
+      </View>
+      <View
+        style={{
+          marginTop: 10,
+          marginHorizontal: 20,
+          flexDirection: 'row',
+          justifyContent: 'space-between',
         }}>
-            <Image source={img} style={{height: 120, width: 120,
-            // circcle
-            borderRadius: 60,
-            borderWidth: 4,
-            borderColor: COLORS.white
+        <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+          {item.nom} 
+        </Text>
+        <View style={style.addToCartBtn}>
+          <Icon name="bookmark" size={20} color={COLORS.white} />
+        </View>
+      </View>
 
-            }} />
-          </View>
-          </TouchableOpacity>
-          <View style={{marginHorizontal: 20}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-              {item.name}
-            </Text>
-            <Text style={{fontSize: 14, color: COLORS.primary, marginTop: 2}}>
-              {item.description}
-            </Text>
-          </View>
-          <View
-            style={{
-              marginTop: 10,
-              marginHorizontal: 20,
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-            }}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
-              {item.nom} 
-            </Text>
-            <View style={style.addToCartBtn}>
-              <Icon name="bookmark" size={20} color={COLORS.white} />
-            </View>
-          </View>
+      </View>
+    </TouchableHighlight>
+  )}
+  numColumns={2}
+  // keyExtractor={(item) => item.id.toString()} // Add a unique key extractor
+/>
 
-          </View>
-        </TouchableHighlight>
-          )}
-          keyExtractor={(item) => item.id}
-        />
       </View>
 
 
@@ -264,10 +357,10 @@ const style = StyleSheet.create({
     marginBottom: 20,
     marginTop: 50,
     borderRadius: 15,
-    borderColor:'red',
+    borderColor: 'red',
     elevation: 13,
     backgroundColor: COLORS.white,
-   
+
   },
   addToCartBtn: {
     height: 30,

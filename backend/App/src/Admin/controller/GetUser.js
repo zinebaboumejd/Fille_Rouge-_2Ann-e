@@ -9,6 +9,17 @@ const user = await User.find({role:"client"});
 res.json(user);
 });
 
+// get bay id 
+const getUserById = asyncHandler(async (req, res) => {
+const user = await User.findById(req.params.id);
+if (user) {
+    res.json(user);
+} else {
+    res.status(404);
+    throw new Error("User not found");
+}
+});
+
 // active desactiver 
 const activeDesactive = asyncHandler(async (req, res) => {
 // update status
@@ -52,5 +63,6 @@ if (user) {
 module.exports = {
     getUser,
     activeDesactive,
-    deleteClient
+    deleteClient,
+    getUserById
 };

@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import COLORS from '../../consts/colors';
 import {View} from 'react-native';
 import Home from '../../pages/Home'
+import Profile from '../../pages/Profile';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 const Tab = createBottomTabNavigator();
 import { useNavigation } from "@react-navigation/native";
@@ -72,15 +73,19 @@ const BottomNavigator = () => {
           ),
         }}
       />
-      <Tab.Screen
-        name="Favorite"
-        component={Home}
-        options={{
-          tabBarIcon: ({color}) => (
-            <Icon name="favorite" color={color} size={28} />
-          ),
-        }}
-      />
+
+{/* profil */}
+
+<Tab.Screen
+  name="Profile"
+  component={Profile}
+  options={{
+    tabBarIcon: ({color}) => (
+      <Icon name="person" color={color} size={28} />
+    ),
+  }}
+/>
+      
       <Tab.Screen
   name="Logout"
   component={Home}
